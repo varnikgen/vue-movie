@@ -34,9 +34,12 @@
                                 </li>
                                 <li   class="li-movie">
                                     <a href="#"><b>Рейтинг:</b>
-                                        <span class="fa fa-star" aria-hidden="true"></span>
-                                        <span class="fa fa-star" aria-hidden="true"></span>
-                                        <span class="fa fa-star" aria-hidden="true"></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                        ></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                        ></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                        ></span>
                                         <span class="fa fa-star" aria-hidden="true"></span>
                                         <span class="fa fa-star" aria-hidden="true"></span>
                                         <span class="editContent">5.0</span>
