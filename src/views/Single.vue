@@ -14,28 +14,26 @@
                                 <li class="li-movie"><span><b>Год:</b> {{movie.year}}</span></li>
                                 <li class="li-movie"><span><b>Страна:</b> {{movie.country}}</span>
                                 </li>
-                                <li class="li-movie"><span><b>Слоган:</b> {{movie.tagline}}</span>
+                                <li class="li-movie"><span><b>Слоган:</b>{{movie.tagline}}</span>
                                 </li>
                                 <li class="li-movie">
-                                    <span><b>Режиссеры: </b>
+                                    <span><b>Режиссеры:</b>
                                         <span v-for="director in movie.directors" :key="director.id">
                                             {{director.name}}
                                         </span>
                                     </span>
                                 </li>
-                                <li class="li-movie">
-                                    <span><b>Актеры: </b>
-                                        <span v-for="actor in movie.actors" :key="actor.id">
+                                <li class="li-movie"><span><b>Актеры:</b>
+                                    <span v-for="actor in movie.actors" :key="actor.id">
                                             {{actor.name}}
-                                        </span>
                                     </span>
+                                </span>
                                 </li>
-                                <li class="li-movie">
-                                    <span><b>Жанр:</b>
-                                        <span v-for="gnr in movie.genre" :key="gnr">
-                                            {{gnr}}
-                                        </span>
+                                <li class="li-movie"><span><b>Жанр:</b>
+                                    <span v-for="gen in movie.genre" :key="gen">
+                                        {{gen}}
                                     </span>
+                                </span>
                                 </li>
                                 <li class="li-movie"><span><b>Премьера в мире:</b> {{movie.world_premiere}}</span>
                                 </li>
@@ -43,9 +41,9 @@
                                     <span><b>Бюджет:</b> ${{movie.budget}}</span></li>
                                 <li class="li-movie">
                                     <span><b>Сборы в США:</b> ${{movie.fees_in_usa}}</span></li>
-                                <li class="li-movie"><span><b>Сборы в мире:</b> ${{movie.fees_in_world}}</span>
+                                <li class="li-movie"><span><b>Сборы в мире:</b> ${{movie.fess_in_world}}</span>
                                 </li>
-                                <li class="li-movie">
+                                <li   class="li-movie">
                                     <a href="#"><b>Рейтинг:</b>
                                         <span class="fa fa-star" aria-hidden="true"
                                         ></span>
@@ -94,68 +92,10 @@
                             <img src="bundles/images/admin.jpg" class="img-fluid" alt="">
                             <img src="bundles/images/d1.jpg" class="img-fluid" alt="">
                         </p>
-                        <p class="editContent" v-html="movie.description">{{movie.description}}</p>
-
+                        <p class="editContent" v-html="movie.description"></p>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="single-form-left">
-                            <!-- contact form grid -->
-                            <div class="contact-single">
-                                <h3 class="editContent">
-                                    <span class="sub-tittle editContent">02</span>Оставить отзыв</h3>
-                                <form action="#" method="get" class="mt-4">
-                                    <div class="form-group editContent">
-                                        <label for="contactcomment" class="editContent">Ваш комментарий *</label>
-                                        <textarea class="form-control border" rows="5"
-                                                  id="contactcomment" required=""></textarea>
-                                    </div>
-                                    <div class="d-sm-flex">
-                                        <div class="col-sm-6 form-group p-0 editContent">
-                                            <label for="contactusername" class="editContent">Имя *</label>
-                                            <input type="text" class="form-control border"
-                                                   id="contactusername" required="">
-                                        </div>
-                                        <div class="col-sm-6 form-group ml-sm-3 editContent">
-                                            <label for="contactemail" class="editContent">Email *
-                                            </label>
-                                            <input type="email" class="form-control border"
-                                                   id="contactemail" required="">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="mt-3 btn btn-success btn-block py-3">
-                                        Отправить
-                                    </button>
-                                </form>
-                            </div>
-
-                        </div>
-                        <div class="media py-5">
-                            <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image">
-                            <div class="media-body mt-4">
-                                <h5 class="mt-0 editContent">Daniel Doe</h5>
-                                <p class="mt-2 editContent">
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                                    scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                                    vulputate at, tempus viverra turpis.
-                                </p>
-                                <div class="media mt-5 editContent">
-                                    <a class="pr-3" href="#">
-                                        <img src="bundles/images/te1.jpg" class="img-fluid "
-                                             alt="image">
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="mt-0 editContent">Leia Organa</h5>
-                                        <p class="mt-2 editContent"> Cras sit amet
-                                            nibh libero, in gravida nulla. Nulla vel metus
-                                            scelerisque ante sollicitudin. Cras purus odio,
-                                            vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                            condimentum nunc ac nisi vulputate fringilla..</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Review :reviews="movie.reviews" :movie="movie.id" @reLoad="loadMovie"/>
                 </div>
             </div>
         </div>
@@ -163,9 +103,11 @@
 </template>
 
 <script>
+    import Review from "../components/Review";
     export default {
         name: "Single",
         props: ['id'],
+        components: {Review},
         data() {
             return {
                 movie: {}
@@ -179,8 +121,6 @@
                 this.movie = await fetch(
                     `${this.$store.getters.getServerUrl}/movie/${this.id}`
                 ).then(response => response.json())
-                console.log(this.movie)
-                console.log(this.id)
             }
         }
     }
@@ -196,8 +136,7 @@
         background-color: rgba(0, 0, 0, 0);
         font-family: Lato, sans-serif;
     }
-
-    .li-movie {
+    .li-movie{
         list-style: none;
     }
 </style>
